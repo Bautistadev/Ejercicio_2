@@ -1,19 +1,23 @@
 package com.eldar.challenge.Entities;
 
 import com.eldar.challenge.Entities.Abstract.Marca;
+import jakarta.persistence.Entity;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 
+@Entity
 public class Amex extends Marca {
 
     private static Float PORCENTAJE = 0.1F;
     private static String NOMBRE = "AMEX";
 
+    private static Long ID = 3L;
+
     public Amex(){
-        super(NOMBRE);
+        super(ID,NOMBRE);
 
     }
 

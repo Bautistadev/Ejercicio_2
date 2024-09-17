@@ -1,20 +1,24 @@
 package com.eldar.challenge.Entities;
 
 import com.eldar.challenge.Entities.Abstract.Marca;
+import jakarta.persistence.Entity;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 
+@Entity
 public class Nara extends Marca {
 
     private static Float PORCENTAJE = 0.5F;
 
     private static String NOMBRE = "NARA";
 
+    private static Long ID = 2L;
+
     public Nara() {
-        super(NOMBRE);
+        super(ID,NOMBRE);
     }
 
     @Override
