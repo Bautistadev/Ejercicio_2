@@ -1,18 +1,21 @@
 package com.eldar.challenge.Entities;
 
 import com.eldar.challenge.Entities.Abstract.Marca;
+import jakarta.persistence.Entity;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 
+@Entity
 public class Visa extends Marca {
 
     private static String NOMBRE = "VISA";
 
+    private static Long ID = 1L;
     public Visa() {
-        super(NOMBRE);
+        super(ID,NOMBRE);
     }
 
     @Override
