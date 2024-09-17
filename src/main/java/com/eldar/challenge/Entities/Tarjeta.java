@@ -16,13 +16,13 @@ public class Tarjeta {
     @Column(name = "numero",nullable = false)
     private Long numero;
 
-    @Column(name = "numero",nullable = false)
+    @Column(name = "expirationDate",nullable = false)
     private LocalDate fecha_vencimiento;
 
-    @Column(name = "numero",nullable = false)
+    @Column(name = "cvv",nullable = false)
     private String CVV;
 
-    @Column(name = "numero",nullable = false)
+    @Column(name = "titular",nullable = false)
     private String nombre_completo_titular;
 
     @ManyToOne
