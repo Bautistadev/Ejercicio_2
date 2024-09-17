@@ -4,6 +4,7 @@ import com.eldar.challenge.Entities.Abstract.Marca;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Tarjeta")
@@ -41,7 +42,21 @@ public class Tarjeta {
         setCVV(CVV);
     }
 
+    public Tarjeta(Long numero, LocalDate fecha_vencimiento, String nombre_completo_titular, Marca marca,String CVV,Persona cardHolder) {
+        this.id = id;
+        this.numero = numero;
+        this.fecha_vencimiento = fecha_vencimiento;
+        this.CVV = CVV;
+        this.nombre_completo_titular = nombre_completo_titular;
+        this.cardHolder = cardHolder;
+        this.marca = marca;
+    }
+
     public Tarjeta() {
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getCVV() {
@@ -127,10 +142,24 @@ public class Tarjeta {
     @Override
     public String toString() {
         return "Tarjeta{" +
-                "numero=" + numero +
+                "id="+id+
+                ", numero=" + numero +
                 ", fecha_vencimiento=" + fecha_vencimiento +
                 ", cashHolder=" + cardHolder +
                 ", marca=" + marca +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tarjeta tarjeta = (Tarjeta) o;
+        return Objects.equals(id, tarjeta.id) && Objects.equals(numero, tarjeta.numero) && Objects.equals(fecha_vencimiento, tarjeta.fecha_vencimiento) && Objects.equals(CVV, tarjeta.CVV) && Objects.equals(nombre_completo_titular, tarjeta.nombre_completo_titular) && Objects.equals(cardHolder, tarjeta.cardHolder) && Objects.equals(marca, tarjeta.marca);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, numero, fecha_vencimiento, CVV, nombre_completo_titular, cardHolder, marca);
     }
 }

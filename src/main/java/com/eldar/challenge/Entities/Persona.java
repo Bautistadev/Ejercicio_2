@@ -3,6 +3,7 @@ package com.eldar.challenge.Entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name="Persona")
@@ -22,6 +23,14 @@ public class Persona {
     @Column(name = "email",nullable = false)
     private String email;
 
+    public Persona(Long id, String nombre, String apellido, Integer dni, LocalDate fecha_de_nacimiento, String email) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.fecha_de_nacimiento = fecha_de_nacimiento;
+        this.email = email;
+    }
 
     public Persona(String nombre, String apellido, Integer dni, LocalDate fecha_de_nacimiento, String email) throws Exception {
         this.setNombre(nombre);
@@ -35,13 +44,16 @@ public class Persona {
     public Persona() {
     }
 
-
+    public Long getId() {
+        return id;
+    }
 
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) throws Exception {
+
 
         if(nombre == null || nombre.trim().isEmpty())
             throw new Exception("El nombre no puede estar vacio o nulo");
@@ -107,16 +119,30 @@ public class Persona {
         if(email == null || apellido.trim().isEmpty())
             throw new Exception("El email no puede estar vacio o nulo");
 
-        if(email.contains("@") && email.contains(".com"))
+        if(!email.contains("@") || !email.contains(".com"))
             throw new Exception("El email debe poseer el dominio y @");
 
         this.email = email;
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Persona persona = (Persona) o;
+        return Objects.equals(id, persona.id) && Objects.equals(nombre, persona.nombre) && Objects.equals(apellido, persona.apellido) && Objects.equals(dni, persona.dni) && Objects.equals(fecha_de_nacimiento, persona.fecha_de_nacimiento) && Objects.equals(email, persona.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre, apellido, dni, fecha_de_nacimiento, email);
+    }
+
+    @Override
     public String toString() {
         return "Persona{" +
-                "nombre='" + nombre + '\'' +
+                "id="+id+'\''+
+                ",nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
                 ", dni=" + dni +
                 ", fecha_de_nacimiento=" + fecha_de_nacimiento +
