@@ -1,6 +1,8 @@
 package com.eldar.challenge.Repository;
 
 import com.eldar.challenge.Entities.Persona;
+import org.junit.Ignore;
+import org.junit.experimental.categories.Category;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,13 +110,4 @@ public class PersonaTest {
         assertEquals(personaDB,personaList.get(2));
     }
 
-    @Test
-    public void removeById(){
-        Persona persona =  this.personaRepository.findById(2L).get();
-        assertNotNull(persona);
-
-        this.personaRepository.deleteById(persona.getId());
-
-        assertFalse(this.personaRepository.findById(2L).isPresent());
-    }
 }

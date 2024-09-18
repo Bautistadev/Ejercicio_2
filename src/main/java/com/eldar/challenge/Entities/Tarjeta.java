@@ -42,7 +42,7 @@ public class Tarjeta {
         setCVV(CVV);
     }
 
-    public Tarjeta(Long numero, LocalDate fecha_vencimiento, String nombre_completo_titular, Marca marca,String CVV,Persona cardHolder) {
+    public Tarjeta(Long id,Long numero, LocalDate fecha_vencimiento, String nombre_completo_titular, Marca marca,String CVV,Persona cardHolder) {
         this.id = id;
         this.numero = numero;
         this.fecha_vencimiento = fecha_vencimiento;
@@ -51,6 +51,7 @@ public class Tarjeta {
         this.cardHolder = cardHolder;
         this.marca = marca;
     }
+
 
     public Tarjeta() {
     }

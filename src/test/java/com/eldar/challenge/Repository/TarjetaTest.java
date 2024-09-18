@@ -46,15 +46,20 @@ public class TarjetaTest {
         IntStream.range(0, 20).forEach(i -> {
 
             Persona persona;
-            Tarjeta tarjeta;
+            Tarjeta tarjeta = null;
             try {
-
+                tarjeta = new Tarjeta();
                 persona = new Persona(RandomChar(5, 15), RandomChar(5, 15), random.nextInt(10000000, 99999999), toLocalDate("29-09-2021"), RandomChar(5, 10) + "@gmail.com");
                 Persona personaDB = this.personaRepository.save(persona);
-                tarjeta = new Tarjeta(random.nextLong(1000000000000000L, 9999999999999999L), toLocalDate("27-09-2032"), persona.getApellido().concat(" " + persona.getNombre()),RandomMarca(),String.valueOf(random.nextInt(100,999)),personaDB);
-                System.out.println(this.tarjetaRepository.save(tarjeta));
 
+                tarjeta.setNumero(new Random().nextLong(1000000000000000L, 9999999999999999L));
+                tarjeta.setFecha_vencimiento(toLocalDate("27-09-2032"));
+                tarjeta.setCVV(String.valueOf(new Random().nextInt(100,999)));
+                tarjeta.setNombre_completo_titular(persona.getApellido().concat(" " + persona.getNombre()));
+                tarjeta.setMarca(RandomMarca());
+                tarjeta.setCashHolder(persona);
 
+                this.tarjetaRepository.save(tarjeta);
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -106,9 +111,15 @@ public class TarjetaTest {
     public void save() throws Exception {
 
         Persona persona = this.personaRepository.findById(2L).get();
-        Tarjeta tarjeta = new Tarjeta(new Random().nextLong(1000000000000000L, 9999999999999999L), toLocalDate("27-09-2032"), persona.getApellido().concat(" " + persona.getNombre()),RandomMarca(),String.valueOf(new Random().nextInt(100,999)),persona);
-
-        System.out.println(tarjeta);
+        Tarjeta tarjeta = new Tarjeta();
+        
+        tarjeta.setNumero(new Random().nextLong(1000000000000000L, 9999999999999999L));
+        tarjeta.setFecha_vencimiento(toLocalDate("27-09-2032"));
+        tarjeta.setCVV(String.valueOf(new Random().nextInt(100,999)));
+        tarjeta.setNombre_completo_titular(persona.getApellido().concat(" " + persona.getNombre()));
+        tarjeta.setMarca(RandomMarca());
+        tarjeta.setCashHolder(persona);
+        
 
         Tarjeta tarjetadb = this.tarjetaRepository.save(tarjeta);
 
