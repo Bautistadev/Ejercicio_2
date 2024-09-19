@@ -1,7 +1,6 @@
 package com.eldar.challenge.Service.Interface;
 
 import com.eldar.challenge.DTO.CompraRequestDTO;
-import com.eldar.challenge.DTO.OperacionRequestDTO;
 import com.eldar.challenge.DTO.OperacionResponseDTO;
 
 public interface OperacionService {

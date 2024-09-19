@@ -1,7 +1,6 @@
 package com.eldar.challenge.Controller;
 
 import com.eldar.challenge.DTO.CompraRequestDTO;
-import com.eldar.challenge.DTO.OperacionRequestDTO;
 import com.eldar.challenge.DTO.OperacionResponseDTO;
 import com.eldar.challenge.Service.Interface.OperacionService;
 import org.springframework.http.HttpStatus;
