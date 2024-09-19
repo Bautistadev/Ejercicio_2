@@ -51,11 +51,9 @@ El sistema cumple con las siguientes características:
 
 ### 1. Usuarios
 - **POST /persona/altaPersona**: Registrar una persona.
-- **DELETE /persona/{dni}**: Eliminar un usuario.
 
 ### 2. Tarjetas
-- **POST /tarjeta/altaTarjeta**: Crear nueva tarjeta
-- **DELETE /tarjetas/{pam}**: Eliminar una tarjeta.
+- **POST /tarjeta/altaTarjeta**: Crear nueva tarjeta.
 
 ### 3. Tasa de Operaciones
 - **GET /operacion/{nroOperacion/id}**: Consultar la tasa de una operación proporcionando la marca de la tarjeta y el importe.
@@ -67,7 +65,8 @@ El sistema cumple con las siguientes características:
 
 El sistema está hosteado en **[Amazon Web Services (AWS)]**, y puede ser accedido desde la siguiente URL:
 
-- **URL**: [https://your-cloud-url.com](http://localhost:8080/swagger-ui/index.html/)
+- **URL**: http://75.101.174.41:8080/[endpoint]
+- **URL GRAFRICO**: http://localhost:8080/swagger-ui/index.html
 
 ## Instalación y Ejecución Local
 
