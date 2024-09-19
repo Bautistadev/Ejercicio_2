@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/operacion")
 public class OperacionController {
 
     private OperacionService operacionService;
@@ -25,7 +25,7 @@ public class OperacionController {
         return ResponseEntity.status(HttpStatus.OK).body(this.operacionService.compra(compraRequestDTO));
     }
 
-    @GetMapping("/operation/{nroOperacion}")
+    @GetMapping("/tasa/{nroOperacion}")
     public ResponseEntity<OperacionResponseDTO>operacion(@PathVariable Long nroOperacion){
         return ResponseEntity.status(HttpStatus.OK).body(operacionService.findOperacion(nroOperacion));
     }
