@@ -66,7 +66,7 @@ El sistema cumple con las siguientes características:
 El sistema está hosteado en **[Amazon Web Services (AWS)]**, y puede ser accedido desde la siguiente URL:
 
 - **URL**: http://75.101.174.41:8080/[endpoint]
-- **URL GRAFRICO**: [http://localhost:8080/swagger-ui/index.html](http://75.101.174.41:8080/swagger-ui/index.html)
+- **URL GRAFRICO**: http://75.101.174.41:8080/swagger-ui/index.html
 
 ## Instalación y Ejecución Local
 
