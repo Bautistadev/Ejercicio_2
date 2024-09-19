@@ -83,11 +83,10 @@ public class OperacionServiceImplements implements OperacionService {
             this.detalleRepository.save(e);
         });
 
-        if(!saveOperacion(compraDB,tarjeta))
-            return "ERROR: Compra fallida";
+        Long NroOperacion = saveOperacion(compraDB,tarjeta);
 
 
-        if(!emailService.sendCompraMessage(tarjeta.getNombre_completo_titular(),compraRequestDTO.getMonto(),compraRequestDTO.getDetalles(),tarjeta.getCashHolder().getEmail()))
+        if(!emailService.sendCompraMessage(tarjeta.getNombre_completo_titular(),compraRequestDTO.getMonto(),compraRequestDTO.getDetalles(),NroOperacion.toString(),tarjeta.getCashHolder().getEmail()))
             return "ERROR: Compra fallida, notificacion no enviada";
 
 
@@ -95,18 +94,17 @@ public class OperacionServiceImplements implements OperacionService {
     }
 
 
-
     //OPERACION GUARDAR
-    private Boolean saveOperacion(Compra compra, Tarjeta tarjeta){
+    private Long saveOperacion(Compra compra, Tarjeta tarjeta){
 
         Operacion operacion = new Operacion();
         operacion.setCompra(compra);
         operacion.setTarjeta(tarjeta);
         operacion.setFechaOperacion(LocalDateTime.now());
 
-        this.operacionRespository.save(operacion);
+        Operacion operaciondb = this.operacionRespository.save(operacion);
 
-        return true;
+        return operaciondb.getId();
     }
 
 

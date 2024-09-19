@@ -46,7 +46,7 @@ public class EmailService {
         return true;
     }
 
-    public Boolean sendCompraMessage(String nombreCompleto, BigDecimal monto, List<DetalleDTO> detalle, String to) throws MessagingException {
+    public Boolean sendCompraMessage(String nombreCompleto, BigDecimal monto, List<DetalleDTO> detalle,String nroOperacion, String to) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message,true,"UTF-8");
 
@@ -54,6 +54,7 @@ public class EmailService {
         context.setVariable("nombre_completo", nombreCompleto.toUpperCase());
         context.setVariable("monto", monto);
         context.setVariable("detalles",detalle);
+        context.setVariable("nroOperacion",nroOperacion);
 
         String htmlContent =  templateEngine.process("email-compra-template",context);
 

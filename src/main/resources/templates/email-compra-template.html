@@ -33,6 +33,7 @@
     <tbody>
     <h1>Hola, <span th:text="${nombre_completo}"></span>!</h1>
     <p>Tu compra a sido todo un existo!!!.</p>
+    <h3>Numero de operacion: <span th:text="${nroOperacion}"></span></h3>
     <h3>Detalle de la compra:</h3>
     <tr th:each="detalle : ${detalles}">
         <td th:text="${detalle.producto}">Nombre del Producto</td>
