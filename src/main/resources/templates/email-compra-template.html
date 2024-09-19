@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Productos</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>Lista de Productos</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+    </tr>
+    </thead>
+    <tbody>
+    <h1>Hola, <span th:text="${nombre_completo}"></span>!</h1>
+    <p>Tu compra a sido todo un existo!!!.</p>
+    <h3>Numero de operacion: <span th:text="${nroOperacion}"></span></h3>
+    <h3>Detalle de la compra:</h3>
+    <tr th:each="detalle : ${detalles}">
+        <td th:text="${detalle.producto}">Nombre del Producto</td>
+        <td th:text="${detalle.cantidad}">Cantidad</td>
+    </tr>
+    <h3>Monto: <span th:text="${monto}"></span></h3>
+    </tbody>
+</table>
+</body>
+</html>

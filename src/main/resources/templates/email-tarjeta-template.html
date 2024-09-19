@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Correo de Confirmación</title>
+</head>
+<body>
+<h1>Hola, <span th:text="${nombre_completo}"></span>!</h1>
+<p>Gracias por registrarte en nuestra plataforma de tarjeta de credito.</p>
+<h3>Detalles de la Tarjeta:</h3>
+<ul>
+    <li><strong>Marca de la Tarjeta :</strong> <span th:text="${marca}"></span></li>
+    <li><strong>Número de Tarjeta   :</strong> <span th:text="${numero}"></span></li>
+    <li><strong>CVV                 :</strong> <span th:text="${cvv}"></span></li>
+</ul>
+<p>Tu operación ha sido procesada exitosamente. ¡Gracias por confiar en nosotros!</p>
+</body>
+</html>
