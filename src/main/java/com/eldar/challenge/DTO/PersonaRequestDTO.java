@@ -11,7 +11,7 @@ public class PersonaRequestDTO extends PersonaAbstractDTO {
 
 
 
-    public PersonaRequestDTO(String nombre, String apellido, Integer dni, LocalDate fecha_de_nacimiento, String email) throws Exception {
+    public PersonaRequestDTO(String nombre, String apellido, Integer dni, String fecha_de_nacimiento, String email) throws Exception {
         super(nombre,apellido,dni,fecha_de_nacimiento,email);
     }
 

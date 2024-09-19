@@ -14,13 +14,16 @@ public class Tarjeta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "numero",nullable = false)
+
+    //DEBE SER UNICO
+    @Column(name = "numero",nullable = false,unique = true)
     private Long numero;
 
     @Column(name = "expirationDate",nullable = false)
     private LocalDate fecha_vencimiento;
 
-    @Column(name = "cvv",nullable = false)
+    //DEBE SER UNICO
+    @Column(name = "cvv",nullable = false,unique = true)
     private String CVV;
 
     @Column(name = "titular",nullable = false)

@@ -1,7 +1,6 @@
 package com.eldar.challenge.Service.Implements;
 
 import com.eldar.challenge.DTO.CompraRequestDTO;
-import com.eldar.challenge.DTO.OperacionRequestDTO;
 import com.eldar.challenge.DTO.OperacionResponseDTO;
 import com.eldar.challenge.Entities.*;
 import com.eldar.challenge.Repository.CompraRepository;
@@ -17,7 +16,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import static com.eldar.challenge.Service.Implements.TarjetaServiceImplements.encriptar;
+import static com.eldar.challenge.Utils.EncriptyClass.encriptar;
+
 
 @Service
 public class OperacionServiceImplements implements OperacionService {
@@ -45,10 +45,17 @@ public class OperacionServiceImplements implements OperacionService {
     public String compra(CompraRequestDTO compraRequestDTO) throws Exception {
 
         if(compraRequestDTO.getMonto().compareTo(new BigDecimal(10000)) > 0)
-            return "El monto supera los 10000$";
+            return "ERROR: El monto supera los 10000$";
+
+        if(compraRequestDTO.getMonto().compareTo(new BigDecimal(0)) <0)
+            return "ERROR: El monto no puede ser menor a 0";
+
+        if(compraRequestDTO.getMonto().compareTo(new BigDecimal(0)) == 0)
+            return "ERROR: El monto no puede ser  0";
+
 
         if(compraRequestDTO.getDetalles().isEmpty())
-            return "Una compra no puede existir sin un detalle";
+            return "ERROR: Una compra no puede existir sin un detalle";
 
 
 
@@ -56,9 +63,9 @@ public class OperacionServiceImplements implements OperacionService {
         try {
             tarjeta = this.tarjetaRepository.findByNumero(compraRequestDTO.getPam()).get();
             if(!encriptar(compraRequestDTO.getCvv()).equals(tarjeta.getCVV()))
-                return "CVV INCORRECTO";
+                return "ERROR: CVV INCORRECTO";
         }catch (Exception e){
-            return "PAM INCORRECTO";
+            return "ERROR: PAM INCORRECTO";
         }
 
 
@@ -67,7 +74,7 @@ public class OperacionServiceImplements implements OperacionService {
         try {
             compraDB = this.compraRepository.save(this.compraMapper.map(compraRequestDTO));
         }catch(Exception e){
-            return "Compra fallida";
+            return "ERROR: Compra fallida";
         }
 
 
@@ -77,15 +84,17 @@ public class OperacionServiceImplements implements OperacionService {
         });
 
         if(!saveOperacion(compraDB,tarjeta))
-            return "Compra fallida";
+            return "ERROR: Compra fallida";
 
 
         if(!emailService.sendCompraMessage(tarjeta.getNombre_completo_titular(),compraRequestDTO.getMonto(),compraRequestDTO.getDetalles(),tarjeta.getCashHolder().getEmail()))
-            return "Compra fallida, notificacion no enviada";
+            return "ERROR: Compra fallida, notificacion no enviada";
 
 
-        return "Compra existosa. Mail enviado con detalle de su compra";
+        return "INFO: Compra existosa. Mail enviado con detalle de su compra";
     }
+
+
 
     //OPERACION GUARDAR
     private Boolean saveOperacion(Compra compra, Tarjeta tarjeta){
@@ -99,6 +108,8 @@ public class OperacionServiceImplements implements OperacionService {
 
         return true;
     }
+
+
 
     @Override
     public OperacionResponseDTO findOperacion(Long nroOperacion)  {

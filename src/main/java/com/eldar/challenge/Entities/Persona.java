@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import static com.eldar.challenge.Utils.ValidateClass.*;
+
 @Entity
 @Table(name="Persona")
 public class Persona {
@@ -32,14 +34,7 @@ public class Persona {
         this.email = email;
     }
 
-    public Persona(String nombre, String apellido, Integer dni, LocalDate fecha_de_nacimiento, String email) throws Exception {
-        this.setNombre(nombre);
-        this.setApellido(apellido);
-        this.setDni(dni);
-        this.setEmail(email);
-        this.setFecha_de_nacimiento(fecha_de_nacimiento);
 
-    }
 
     public Persona() {
     }
@@ -54,12 +49,8 @@ public class Persona {
 
     public void setNombre(String nombre) throws Exception {
 
-
-        if(nombre == null || nombre.trim().isEmpty())
+        if(!validateText(nombre))
             throw new Exception("El nombre no puede estar vacio o nulo");
-
-        if(!nombre.matches("[a-zA-Z]+"))
-            throw new Exception("El nombre solo puede tener caracteres no numericos y especiales");
 
         this.nombre = nombre;
     }
@@ -72,11 +63,8 @@ public class Persona {
 
     public void setApellido(String apellido) throws Exception {
 
-        if(apellido == null || apellido.trim().isEmpty())
+        if(!validateText(apellido))
             throw new Exception("El apellido no puede estar vacio o nulo");
-
-        if(!apellido.matches("[a-zA-Z]+"))
-            throw new Exception("El apellido solo puede tener caracteres no numericos y especiales");
 
         this.apellido = apellido;
     }
@@ -89,7 +77,7 @@ public class Persona {
 
     public void setDni(Integer dni) throws Exception {
 
-        if(dni == null || dni.toString().length() < 8)
+        if(!validateMinNumber(dni,8))
             throw new Exception("El dni no puede estar vacio o nulo, ademas debe poseer mas de 8 caracteres");
 
         this.dni = dni;
@@ -103,7 +91,7 @@ public class Persona {
 
     public void setFecha_de_nacimiento(LocalDate fecha_de_nacimiento) throws Exception {
 
-        if(fecha_de_nacimiento == null)
+        if(!validBirthDate(fecha_de_nacimiento))
             throw new Exception("La fecha de nacimiento no puede estar vacio o nulo");
 
         this.fecha_de_nacimiento = fecha_de_nacimiento;
@@ -116,10 +104,8 @@ public class Persona {
     }
 
     public void setEmail(String email) throws Exception {
-        if(email == null || email.trim().isEmpty())
-            throw new Exception("El email no puede estar vacio o nulo");
 
-        if(!email.contains("@") || !email.contains(".com"))
+        if(!validateEmail(email))
             throw new Exception("El email debe poseer el dominio y @");
 
         this.email = email;

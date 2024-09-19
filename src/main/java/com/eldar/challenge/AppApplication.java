@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import static com.eldar.challenge.Service.Implements.TarjetaServiceImplements.desencriptar;
-import static com.eldar.challenge.Service.Implements.TarjetaServiceImplements.encriptar;
+
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.eldar.challenge")
@@ -29,8 +28,10 @@ public class AppApplication implements CommandLineRunner {
 
 		ConfigurableApplicationContext ctx = SpringApplication.run(AppApplication.class, args);
 
-		TarjetaRepository p = ctx.getBean(TarjetaRepository.class);
-		System.out.println(p.findByNumero(5301682132884790L));
+		TarjetaRepository  p = ctx.getBean(TarjetaRepository.class);
+
+		System.out.println(p.findByCardHolderId(8L));
+
 
 	}
 

@@ -16,6 +16,9 @@ import java.time.LocalDate;
 import java.util.Base64;
 import java.util.Random;
 
+import static com.eldar.challenge.Utils.EncriptyClass.encriptar;
+import static com.eldar.challenge.Utils.ValidateClass.*;
+
 @Service
 public class TarjetaServiceImplements implements TarjetaService {
 
@@ -23,9 +26,10 @@ public class TarjetaServiceImplements implements TarjetaService {
     private TarjetaMapper tarjetaMapper;
     private TarjetaRepository tarjetaRepository;
     private PersonaRepository personaRepository;
-
     private EmailService emailService;
 
+
+    //INYECTAMOS DEPENDENCIAS
     public TarjetaServiceImplements(TarjetaMapper tarjetaMapper,TarjetaRepository tarjetaRepository,PersonaRepository personaRepository,EmailService emailService) {
         this.tarjetaMapper = tarjetaMapper;
         this.tarjetaRepository = tarjetaRepository;
@@ -33,12 +37,32 @@ public class TarjetaServiceImplements implements TarjetaService {
         this.emailService = emailService;
     }
 
+
+    /**
+     * @function: Alta y persistir tarjeta
+     * @param: Datos de la tarjeta
+     * @resturn: Mensaje de guardado exitoso
+     * */
     @Override
     public String save(TarjetaRequestDTO tarjetaRequestDTO) throws Exception {
 
+        //MAPEAMOS LOS DATOS DEL DTO TARJETA AL TARJETA ENTIDAD
         Tarjeta tarjetaSave = this.tarjetaMapper.map(tarjetaRequestDTO);
+
+
+        //VALIDAMOS EXISTENCIA DE LA PERSONA
+        if(!this.personaRepository.existsByDni(tarjetaRequestDTO.getDNI()))
+            return "ERROR: Persona no existente";
         Persona persona = this.personaRepository.findByDni(tarjetaRequestDTO.getDNI()).get();
 
+
+        //VALIDAMOS EXISTENCIA DE TARJETA REPETIDA
+         if(tarjetaRepository.findByCardHolderId(persona.getId()).stream().anyMatch(e->e.getMarca().equals(tarjetaSave.getMarca())))
+            return "ERROR: YA EXISTE UNA TARJETA CON ESTA MARCA, PERTENECIENTE A LA PERSONA";
+
+
+        //COMPLETAMOS LOS DATOS FALTANTES DE LA TARJETA
+        //LA BASE DE DATOS ESTA CONDIFGURADA PARA QUE EL PAM Y EL CVV SEAN UNICOS
         Long pam = generarNumeroDe16Cifras();
         Integer cvv = generarNumeroDeCVV();
 
@@ -47,61 +71,20 @@ public class TarjetaServiceImplements implements TarjetaService {
         tarjetaSave.setFecha_vencimiento(crearFechaVencimiento(LocalDate.now(),48));
         tarjetaSave.setCashHolder(persona);
 
-        this.tarjetaRepository.save(tarjetaSave);
 
+        //PERSISTIMOS
+        try {
+            this.tarjetaRepository.save(tarjetaSave);
+        }catch (Exception e){
+            return "ERROR: CVV o PAM REPETIDOS";
+        }
+
+        //ENVIAMOS MAIL
         this.emailService.sendInfoTarjetaMessage(tarjetaRequestDTO.getNombre_completo_titular(),formatearNumeroTarjeta(pam.toString()),cvv.toString(),tarjetaRequestDTO.getMarca(),persona.getEmail());
 
+        //MOSTRAMOS MEN
         return "Tu operación ha sido procesada exitosamente. ¡Gracias por confiar en nosotros!. Los datos de tu tarjeta se verán reflejados en tu correo electrónico";
     }
 
-    public Long generarNumeroDe16Cifras() {
-        Random random = new Random();
 
-        // Generar un número aleatorio de 16 cifras
-        long numero = 1000000000000000L + (long)(random.nextDouble() * 9000000000000000L);
-
-        return numero;
-    }
-
-    public Integer generarNumeroDeCVV() {
-        Random random = new Random();
-
-        // Generar un número aleatorio de 3 cifras
-        return 100 + random.nextInt(900);
-    }
-
-    public LocalDate crearFechaVencimiento(LocalDate fechaInicial, int meses) {
-        // Suma los meses a la fecha inicial
-        return fechaInicial.plusMonths(meses);
-    }
-
-    public static String encriptar(String CVV) throws Exception {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, crearClave("1234567812345678"));
-        byte[] encrypted = cipher.doFinal(CVV.getBytes());
-        return Base64.getEncoder().encodeToString(encrypted);
-    }
-
-    public static String desencriptar(String encriptadoCVV) throws Exception {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, crearClave("1234567812345678"));
-
-        byte[] datosDescifrados = cipher.doFinal(Base64.getDecoder().decode(encriptadoCVV));
-        return new String(datosDescifrados);
-    }
-
-    private static SecretKeySpec crearClave(String claveSecreta) throws Exception {
-        byte[] key = claveSecreta.getBytes("UTF-8");
-        return new SecretKeySpec(key, "AES");
-    }
-
-    public static String formatearNumeroTarjeta(String numero) {
-        // Verifica que el número tenga 16 cifras
-        if (numero == null || numero.length() != 16 || !numero.matches("\\d+")) {
-            throw new IllegalArgumentException("El número de tarjeta debe tener 16 cifras.");
-        }
-
-        // Usa expresiones regulares para insertar los guiones en la posición correcta
-        return numero.replaceAll("(\\d{4})(\\d{4})(\\d{4})(\\d{4})", "$1-$2-$3-$4");
-    }
 }

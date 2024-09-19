@@ -2,6 +2,7 @@ package com.eldar.challenge.Repository;
 
 import com.eldar.challenge.Entities.Tarjeta;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
@@ -19,5 +20,8 @@ public interface TarjetaRepository extends JpaRepository<Tarjeta,Long> {
     @Query(value = "select * from tarjeta where numero = :numero", nativeQuery = true)
     public Optional<Tarjeta> findByNumero(@Param("numero")Long numero);
 
+    @Modifying
+    @Query(nativeQuery = true, value = "DELETE FROM tarjeta WHERE numero = :numero")
+    public void deleteByNumero(@Param("numero")Long numero);
 
 }

@@ -2,7 +2,6 @@ package com.eldar.challenge.Entities;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity

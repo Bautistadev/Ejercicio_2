@@ -4,10 +4,7 @@ import com.eldar.challenge.DTO.TarjetaRequestDTO;
 import com.eldar.challenge.Service.Interface.TarjetaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -26,4 +23,10 @@ public class TarjetaController {
         String response = this.tarjetaService.save(tarjetaRequestDTO);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+  /*  @DeleteMapping("/eliminarTarjeta/{pam}")
+    public ResponseEntity<String> eliminarTarjeta(@PathVariable Long pam){
+        String response = this.tarjetaService.delete(pam);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }*/
 }

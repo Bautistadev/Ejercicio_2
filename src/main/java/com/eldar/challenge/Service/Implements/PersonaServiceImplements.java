@@ -24,17 +24,33 @@ public class PersonaServiceImplements implements PersonaService {
 
 
 
-
+    /*
+    * INYECTAMOS DEPENDENCIAS
+    * */
     public PersonaServiceImplements(PersonaMapper personaMapper,PersonaRepository personaRepository) {
         this.personaMapper = personaMapper;
         this.personaRepository = personaRepository;
     }
 
+
+
+    /**
+     * @function: Guardar persona
+     * @param: PersonaRequestDTO
+     * @return PersonaResponseDTO
+     * */
     @Override
     public PersonaResponseDTO save(PersonaRequestDTO personaRequestDTO) throws Exception {
 
+        PersonaResponseDTO response = new PersonaResponseDTO();
+        if(personaRepository.existsByDni(personaRequestDTO.getDni())) {
+            response.setMessage("ERROR: PERSONA EXISTENTE");
+            return response;
+        }
+
         Persona personaSave = this.personaRepository.save(this.personaMapper.map(personaRequestDTO));
-        PersonaResponseDTO response = this.personaMapper.map(personaSave);
+        response = this.personaMapper.map(personaSave);
+        response.setMessage("INFO: PERSONA PERSISTIDA CON EXITO");
 
 
         return response;
