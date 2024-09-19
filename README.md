@@ -31,7 +31,7 @@ El sistema cumple con las siguientes características:
 
 ### 3. Cálculo de Tasas:
 - Cálculo de la tasa de una operación dependiendo de la marca de la tarjeta:
-    - **VISA**: Año / Mes (Ejemplo: 2020/12 = 1.67%).
+    - **VISA**: Año / Mes (Ejemplo: 20/12 = 1.67%).
     - **NARA**: Día del mes * 0.5 (Ejemplo: 27 * 0.5 = 13.5%).
     - **AMEX**: Mes * 0.1 (Ejemplo: 9 * 0.1 = 0.9%).
 
