@@ -44,6 +44,7 @@ public class OperacionServiceImplements implements OperacionService {
     @Override
     public String compra(CompraRequestDTO compraRequestDTO) throws Exception {
 
+        //VALIDACIONES DEL MONTO
         if(compraRequestDTO.getMonto().compareTo(new BigDecimal(10000)) > 0)
             return "ERROR: El monto supera los 10000$";
 
