@@ -25,8 +25,7 @@ public class Persona {
     @Column(name = "email",nullable = false)
     private String email;
 
-    public Persona(Long id, String nombre, String apellido, Integer dni, LocalDate fecha_de_nacimiento, String email) {
-        this.id = id;
+    public Persona( String nombre, String apellido, Integer dni, LocalDate fecha_de_nacimiento, String email) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -38,6 +37,8 @@ public class Persona {
 
     public Persona() {
     }
+
+
 
     public Long getId() {
         return id;
@@ -92,7 +93,7 @@ public class Persona {
     public void setFecha_de_nacimiento(LocalDate fecha_de_nacimiento) throws Exception {
 
         if(!validBirthDate(fecha_de_nacimiento))
-            throw new Exception("La fecha de nacimiento no puede estar vacio o nulo");
+            throw new Exception("La fecha de nacimiento no puede estar vacio, nula o invalida");
 
         this.fecha_de_nacimiento = fecha_de_nacimiento;
     }

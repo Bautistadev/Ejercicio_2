@@ -15,5 +15,9 @@ public class PersonaRequestDTO extends PersonaAbstractDTO {
         super(nombre,apellido,dni,fecha_de_nacimiento,email);
     }
 
+    public PersonaRequestDTO(){
+        super();
+    }
+
 
 }

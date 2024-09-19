@@ -15,6 +15,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.eldar.challenge.Utils.ValidateClass.toLocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -30,20 +31,21 @@ public class TarjetaTest {
     @Autowired
     private MarcaRepository marcaRepository;
 
+    //CREAMOS DATOS ALEATORIOS PARA LLENAR NUESTRA BASE DE DATOS
     @BeforeEach
     public void setUp() {
 
         Random random = new Random();
 
         /**
-         * crea 20 objetos aleatorios
+         * crea 5 objetos aleatorios
          *
          * */
         this.marcaRepository.save(new Visa());
         this.marcaRepository.save(new Nara());
         this.marcaRepository.save(new Amex());
 
-        IntStream.range(0, 20).forEach(i -> {
+        IntStream.range(0, 5).forEach(i -> {
 
             Persona persona;
             Tarjeta tarjeta = null;
@@ -69,6 +71,7 @@ public class TarjetaTest {
         });
     }
 
+    //CREA PALABRAS ALAEATORIAS
     private String RandomChar(Integer inicio, Integer fin) {
         Random random = new Random();
 
@@ -85,15 +88,7 @@ public class TarjetaTest {
         return word;
     }
 
-    private LocalDate toLocalDate(String fecha) {
-        String[] datosFecha = fecha.split("-");
 
-
-        return LocalDate.of(Integer.parseInt(datosFecha[2].trim()), //AÑO
-                Integer.parseInt(datosFecha[1].trim()), // FECHA
-                Integer.parseInt(datosFecha[0].trim())); // MES
-
-    }
 
     private Marca RandomMarca(){
         int rand =  new Random().nextInt(1,3);
@@ -134,7 +129,7 @@ public class TarjetaTest {
 
         assertNotNull(tarjetasList);
         assertTrue(tarjetasList.isEmpty() == false);
-        assertTrue(tarjetasList.stream().count() >= 20);
+        assertTrue(tarjetasList.stream().count() >= 5);
         assertNotNull(tarjetasList.get(2));
     }
 

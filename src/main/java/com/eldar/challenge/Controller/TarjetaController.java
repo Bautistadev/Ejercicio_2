@@ -24,9 +24,5 @@ public class TarjetaController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-  /*  @DeleteMapping("/eliminarTarjeta/{pam}")
-    public ResponseEntity<String> eliminarTarjeta(@PathVariable Long pam){
-        String response = this.tarjetaService.delete(pam);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }*/
+
 }

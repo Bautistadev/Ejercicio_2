@@ -28,10 +28,6 @@ public class AppApplication implements CommandLineRunner {
 
 		ConfigurableApplicationContext ctx = SpringApplication.run(AppApplication.class, args);
 
-		TarjetaRepository  p = ctx.getBean(TarjetaRepository.class);
-
-		System.out.println(p.findByCardHolderId(8L));
-
 
 	}
 
