@@ -56,7 +56,7 @@ El sistema cumple con las siguientes características:
 - **POST /tarjeta/altaTarjeta**: Crear nueva tarjeta.
 
 ### 3. Tasa de Operaciones
-- **GET /operacion/{nroOperacion/id}**: Consultar la tasa de una operación proporcionando la marca de la tarjeta y el importe.
+- **GET /operacion/tasa/{nroOperacion/id}**: Consultar la tasa de una operación proporcionando la marca de la tarjeta y el importe.
 
 ### 4. Compras
 - **POST /operacion/compra**: Realizar una compra proporcionando el monto, el detalle, la tarjeta asociada y el CVV. Al finalizar la compra, el usuario recibe una notificación por email.
