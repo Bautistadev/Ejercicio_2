@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.eldar.challenge.Utils.EncriptyClass.desencriptar;
+import static com.eldar.challenge.Utils.ValidateClass.localDateToString;
 
 
 @Service
@@ -92,11 +93,11 @@ public class OperacionServiceImplements implements OperacionService {
 
         switch (marca.toUpperCase()) {
             case "VISA" :
-                return localDate.stream().map(e->new OperacionResponseDTO(new Visa().calcularTasa(e),monto,"VISA")).collect(Collectors.toList());
+                return localDate.stream().map(e->new OperacionResponseDTO(new Visa().calcularTasa(e),monto,"VISA",localDateToString(e))).collect(Collectors.toList());
             case "NARA" :
-                return localDate.stream().map(e->new OperacionResponseDTO(new Nara().calcularTasa(e),monto,"NARA")).collect(Collectors.toList());
+                return localDate.stream().map(e->new OperacionResponseDTO(new Nara().calcularTasa(e),monto,"NARA",localDateToString(e))).collect(Collectors.toList());
             case "AMEX" :
-                return localDate.stream().map(e->new OperacionResponseDTO(new Amex().calcularTasa(e),monto,"AMEX")).collect(Collectors.toList());
+                return localDate.stream().map(e->new OperacionResponseDTO(new Amex().calcularTasa(e),monto,"AMEX",localDateToString(e))).collect(Collectors.toList());
             default: return null;
         }
 
