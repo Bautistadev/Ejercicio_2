@@ -29,10 +29,6 @@ public abstract class PersonaAbstractDTO {
     }
 
     public void setNombre(String nombre) throws Exception {
-
-        if(!validateText(nombre))
-            throw new Exception("El nombre no puede estar vacio o nulo");
-
         this.nombre = nombre;
     }
 
@@ -41,9 +37,6 @@ public abstract class PersonaAbstractDTO {
     }
 
     public void setApellido(String apellido) throws Exception {
-        if(!validateText(apellido))
-            throw new Exception("El apellido no puede estar vacio o nulo");
-
         this.apellido = apellido;
     }
 

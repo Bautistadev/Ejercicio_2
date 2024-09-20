@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static com.eldar.challenge.Utils.ValidateClass.nombreTitularValida;
+
 @RestController
 @RequestMapping("/api/v1/tarjeta")
 public class TarjetaController {
@@ -22,6 +24,9 @@ public class TarjetaController {
 
     @PostMapping("/altaTarjeta")
     public ResponseEntity<ResponseEntityDTO<TarjetaDTO>> altaTarjeta(@Valid @RequestBody TarjetaRequestDTO tarjetaRequestDTO) throws Exception {
+
+        if(!nombreTitularValida(tarjetaRequestDTO.getNombre_completo_titular()))
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error, el nombre del titular debe ser completo y no puede tener caracteres especiales"),HttpStatus.BAD_REQUEST);
 
         //VALIDAMO EXISTENCIA DE LA PERSONA
         if(!this.tarjetaService.existsByDni(tarjetaRequestDTO.getDNI()))

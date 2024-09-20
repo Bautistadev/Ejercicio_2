@@ -42,13 +42,13 @@ public class OperacionController {
         if(compraRequestDTO.getDetalles().isEmpty())
             return new ResponseEntity<>(ResponseEntityDTO.error("Error: debes ingresar el detalle"),HttpStatus.BAD_REQUEST);
 
-        if(this.operacionService.findTarjetaByPam(compraRequestDTO.getPam()) == null)
+        if(this.operacionService.findTarjetaBypan(compraRequestDTO.getpan()) == null)
             return new ResponseEntity<>(ResponseEntityDTO.error("Error: tarjeta no registrada"),HttpStatus.NOT_FOUND);
 
-        if(isExpired(localDateToString(this.operacionService.findTarjetaByPam(compraRequestDTO.getPam()).getFecha_vencimiento())))
+        if(isExpired(localDateToString(this.operacionService.findTarjetaBypan(compraRequestDTO.getpan()).getFecha_vencimiento())))
             return new ResponseEntity<>(ResponseEntityDTO.error("Error: tarjeta caducada"),HttpStatus.BAD_REQUEST);
 
-        if(!this.operacionService.validateCVV(compraRequestDTO.getPam(),compraRequestDTO.getCvv()))
+        if(!this.operacionService.validateCVV(compraRequestDTO.getpan(),compraRequestDTO.getCvv()))
             return new ResponseEntity<>(ResponseEntityDTO.error("Error: cvv fallido"),HttpStatus.NOT_FOUND);
 
 

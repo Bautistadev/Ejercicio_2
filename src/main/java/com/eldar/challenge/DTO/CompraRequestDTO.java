@@ -15,15 +15,15 @@ public class CompraRequestDTO {
 
     private BigDecimal monto;
 
-    private Long pam;
+    private Long pan;
 
     private String cvv;
 
     private List<DetalleDTO> detalles;
 
-    public CompraRequestDTO(BigDecimal monto, Long pam, String cvv, List<DetalleDTO> detalles) {
+    public CompraRequestDTO(BigDecimal monto, Long pan, String cvv, List<DetalleDTO> detalles) {
         this.monto = monto;
-        this.pam = pam;
+        this.pan = pan;
         this.cvv = cvv;
         this.detalles = detalles;
     }
@@ -48,12 +48,12 @@ public class CompraRequestDTO {
         this.detalles = detalles;
     }
 
-    public Long getPam() {
-        return pam;
+    public Long getpan() {
+        return pan;
     }
 
-    public void setPam(Long pam) {
-        this.pam = pam;
+    public void setpan(Long pan) {
+        this.pan = pan;
     }
 
     public String getCvv() {

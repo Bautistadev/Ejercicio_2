@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 public class ValidateClass {
     public static boolean validateText(String validate){
@@ -125,5 +126,46 @@ public class ValidateClass {
     public static LocalDate crearFechaVencimiento(LocalDate fechaInicial, int meses) {
         // Suma los meses a la fecha inicial
         return fechaInicial.plusMonths(meses);
+    }
+
+   /* public static boolean nombreTitularValida(String cadena) {
+        if (cadena == null || cadena.isEmpty()) {
+            return false;
+        }
+
+        // Usamos IntStream para recorrer la cadena y verificar si todos los caracteres son válidos
+        return cadena.chars()
+                .allMatch(c -> Character.isLetter(c) || c == ' ');
+    }*/
+
+    public static boolean nombreTitularValida(String cadena) {
+        if (cadena == null || cadena.length() < 2) {
+            return false;
+        }
+
+        // Verificamos que el primer carácter sea una letra
+        if (!Character.isLetter(cadena.charAt(0))) {
+            return false;
+        }
+
+        // Creamos un Stream a partir del índice 1 (después de la primera letra)
+        return IntStream.range(1, cadena.length())
+                .anyMatch(i -> cadena.charAt(i) == ' ') && // Al menos un espacio
+                cadena.chars().skip(1) // Saltamos el primer carácter
+                        .allMatch(c -> Character.isLetter(c) || c == ' '); // Todos los demás son letras o espacios
+    }
+    public static boolean sinEspacios(String cadena) {
+        if (cadena == null || cadena.isEmpty()) {
+            return false;
+        }
+
+        System.out.println(cadena.chars()
+                .noneMatch(c -> c == ' ') && cadena.chars()
+                .allMatch(Character::isLetter));
+
+        // Verificamos que no haya espacios y que todos los caracteres sean letras
+        return cadena.chars()
+                .noneMatch(c -> c == ' ') && cadena.chars()
+                .allMatch(Character::isLetter);
     }
 }

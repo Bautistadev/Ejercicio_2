@@ -50,11 +50,11 @@ public class TarjetaServiceImplements implements TarjetaService {
 
 
         //COMPLETAMOS LOS DATOS FALTANTES DE LA TARJETA
-        //LA BASE DE DATOS ESTA CONDIFGURADA PARA QUE EL PAM Y EL CVV SEAN UNICOS
-        Long pam = generarNumeroDe16Cifras();
+        //LA BASE DE DATOS ESTA CONDIFGURADA PARA QUE EL pan Y EL CVV SEAN UNICOS
+        Long pan = generarNumeroDe16Cifras();
         Integer cvv = generarNumeroDeCVV();
 
-        tarjetaSave.setNumero(pam);
+        tarjetaSave.setNumero(pan);
         tarjetaSave.setCVV(encriptar(cvv.toString()));
         tarjetaSave.setFecha_vencimiento(crearFechaVencimiento(LocalDate.now(),48));
         tarjetaSave.setCashHolder(persona);
@@ -64,7 +64,7 @@ public class TarjetaServiceImplements implements TarjetaService {
         TarjetaDTO tarjetaDTO = this.tarjetaMapper.map(this.tarjetaRepository.save(tarjetaSave));
 
         //ENVIAMOS MAIL
-        this.emailService.sendInfoTarjetaMessage(tarjetaRequestDTO.getNombre_completo_titular(),formatearNumeroTarjeta(pam.toString()),cvv.toString(),tarjetaRequestDTO.getMarca(),persona.getEmail());
+        this.emailService.sendInfoTarjetaMessage(tarjetaRequestDTO.getNombre_completo_titular(),formatearNumeroTarjeta(pan.toString()),cvv.toString(),tarjetaRequestDTO.getMarca(),persona.getEmail());
 
         //MOSTRAMOS MEN
         return tarjetaDTO;
