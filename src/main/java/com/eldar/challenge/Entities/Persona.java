@@ -48,11 +48,7 @@ public class Persona {
         return nombre;
     }
 
-    public void setNombre(String nombre) throws Exception {
-
-        if(!validateText(nombre))
-            throw new Exception("El nombre no puede estar vacio o nulo");
-
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
@@ -62,11 +58,7 @@ public class Persona {
         return apellido;
     }
 
-    public void setApellido(String apellido) throws Exception {
-
-        if(!validateText(apellido))
-            throw new Exception("El apellido no puede estar vacio o nulo");
-
+    public void setApellido(String apellido){
         this.apellido = apellido;
     }
 
@@ -77,8 +69,6 @@ public class Persona {
     }
 
     public void setDni(Integer dni) throws Exception {
-        if(!validateMinNumber(dni,8))
-            throw new Exception("El dni no puede estar vacio o nulo, ademas debe poseer mas de 8 caracteres");
         this.dni = dni;
     }
 

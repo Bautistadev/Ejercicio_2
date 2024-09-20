@@ -55,7 +55,7 @@ El sistema cumple con las siguientes características:
 
 ### 2. Tarjetas
 - **POST /tarjeta/altaTarjeta**: Crear nueva tarjeta
-- **DELETE /tarjetas/{pam}**: Eliminar una tarjeta.
+- **DELETE /tarjetas/{pan}**: Eliminar una tarjeta.
 
 ### 3. Tasa de Operaciones
 - **GET /operacion/{nroOperacion/id}**: Consultar la tasa de una operación proporcionando la marca de la tarjeta y el importe.

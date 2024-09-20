@@ -16,8 +16,8 @@ public interface OperacionService {
 
     List<OperacionResponseDTO> findOperacion(BigDecimal monto, String marca);
 
-    public Tarjeta findTarjetaByPam(Long pam);
+    public Tarjeta findTarjetaBypan(Long pan);
 
-    public Boolean validateCVV(Long pam, String CVV) throws Exception;
+    public Boolean validateCVV(Long pan, String CVV) throws Exception;
     public Boolean existsMarca(String marca);
 }

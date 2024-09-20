@@ -49,7 +49,7 @@ public class OperacionServiceImplements implements OperacionService {
     @Override
     public CompraDTO compra(CompraRequestDTO compraRequestDTO) throws Exception {
 
-        Tarjeta tarjeta = findTarjetaByPam(compraRequestDTO.getPam());
+        Tarjeta tarjeta = findTarjetaBypan(compraRequestDTO.getpan());
 
         //GUARDAMOS LA COMPRA
         Compra compraDB = this.compraRepository.save(this.compraMapper.map(compraRequestDTO));
@@ -104,17 +104,17 @@ public class OperacionServiceImplements implements OperacionService {
     }
 
     @Override
-    public Tarjeta findTarjetaByPam(Long pam) {
+    public Tarjeta findTarjetaBypan(Long pan) {
         try {
-            return this.tarjetaRepository.findByNumero(pam).get();
+            return this.tarjetaRepository.findByNumero(pan).get();
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public Boolean validateCVV(Long pam, String CVV) throws Exception {
-        Tarjeta tarjeta = this.tarjetaRepository.findByNumero(pam).get();
+    public Boolean validateCVV(Long pan, String CVV) throws Exception {
+        Tarjeta tarjeta = this.tarjetaRepository.findByNumero(pan).get();
         return CVV.equals(desencriptar(tarjeta.getCVV()));
     }
 

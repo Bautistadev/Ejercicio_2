@@ -31,13 +31,21 @@ public class PersonaController {
     public ResponseEntity<ResponseEntityDTO<PersonaResponseDTO>>addPersona(@Valid @RequestBody PersonaRequestDTO personaRequestDTO)  {
         PersonaResponseDTO response = null;
 
+        //VALIDAMOS EXISTENCIA DE CARACTERES ESPECIALES EN EL NOMBRE Y APELLIDO
+        if(!validateText(personaRequestDTO.getNombre()) || !validateText(personaRequestDTO.getApellido()))
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error, El nombre y el apellido, no deben llevar caracteres especiales, ni numeros"),HttpStatus.BAD_REQUEST);
+
+        if(!validateMinNumber(personaRequestDTO.getDni(),8))
+            return new ResponseEntity<>(ResponseEntityDTO.error("El dni no puede estar vacio o nulo, ademas debe poseer mas de 8 caracteres"),HttpStatus.BAD_REQUEST);
+
         //VALIDAMOS EXISTENCIA DE LA PERSONA EN LA BASE DE DATOS
         if(this.personaService.existsByDni(personaRequestDTO.getDni()))
             return new ResponseEntity<>(ResponseEntityDTO.error("Error, Persona ya existente"),HttpStatus.CONFLICT);
 
+
         //VALIDAMOS EMAIL DE LA PERSONA
         if(!validateEmail(personaRequestDTO.getEmail()))
-            return new ResponseEntity<>(ResponseEntityDTO.error("Error en el ingreso del email"),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error en el ingreso del email, faltante del @ o .com"),HttpStatus.BAD_REQUEST);
 
         //VALIDAMOS FORMATO Y FECHA DE NACIMIENTO
         if(!validateFormatDate(personaRequestDTO.getFecha_de_nacimiento()) || !validBirthDate(toLocalDate(personaRequestDTO.getFecha_de_nacimiento())))
