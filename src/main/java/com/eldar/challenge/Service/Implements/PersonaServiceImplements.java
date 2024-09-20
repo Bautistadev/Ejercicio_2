@@ -35,10 +35,6 @@ public class PersonaServiceImplements implements PersonaService {
     public PersonaResponseDTO save(PersonaRequestDTO personaRequestDTO) throws Exception {
 
         PersonaResponseDTO response = new PersonaResponseDTO();
-        if(personaRepository.existsByDni(personaRequestDTO.getDni())) {
-            response.setMessage("ERROR: PERSONA EXISTENTE");
-            return response;
-        }
 
         Persona personaSave = this.personaRepository.save(this.personaMapper.map(personaRequestDTO));
         response = this.personaMapper.map(personaSave);
@@ -46,6 +42,10 @@ public class PersonaServiceImplements implements PersonaService {
 
 
         return response;
+    }
+    @Override
+    public Boolean existsByDni(Integer dni){
+        return personaRepository.existsByDni(dni);
     }
 
 }

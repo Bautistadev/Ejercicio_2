@@ -1,6 +1,8 @@
 package com.eldar.challenge.Service.Mapper;
 
+import com.eldar.challenge.DTO.CompraDTO;
 import com.eldar.challenge.DTO.CompraRequestDTO;
+import com.eldar.challenge.DTO.DetalleDTO;
 import com.eldar.challenge.Entities.Compra;
 import com.eldar.challenge.Entities.Detalle;
 
@@ -30,5 +32,19 @@ public class CompraMapper {
         }).collect(Collectors.toList()));
 
         return compra;
+    }
+
+    public CompraDTO map(Compra compra){
+        CompraDTO compraDTO = new CompraDTO();
+
+        compraDTO.setId(compra.getId());
+        compraDTO.setMonto(compra.getMonto());
+        compraDTO.setDetalles(compra.getDetalles().stream().map(e->{
+            DetalleDTO detalleDTO = this.detalleMapper.map(e);
+            return detalleDTO;
+        }).collect(Collectors.toList()));
+
+        return compraDTO;
+
     }
 }

@@ -6,4 +6,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface PersonaService {
     public PersonaResponseDTO save(PersonaRequestDTO personaRequestDTO) throws Exception;
+
+    public Boolean existsByDni(Integer dni);
 }
