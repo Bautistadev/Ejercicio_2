@@ -61,10 +61,11 @@ public class OperacionController {
     public ResponseEntity<ResponseEntityDTO<List<OperacionResponseDTO>>>operacion(@PathVariable String marca, BigDecimal importe){
 
         if(marca == null || importe == null || importe.equals(0))
-            new ResponseEntity<>(ResponseEntityDTO.error("Error: Mal ingreso de los datos"),HttpStatus.BAD_REQUEST);
-
-        if(operacionService.existsMarca(marca))
-            new ResponseEntity<>(ResponseEntityDTO.error("Error: La marca no existente"),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error: Mal ingreso de los datos"),HttpStatus.BAD_REQUEST);
+        
+        if(!operacionService.existsMarca(marca)){
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error: La marca no existente"),HttpStatus.NOT_FOUND);
+        }
 
         List<OperacionResponseDTO> operacionResponseDTOList = this.operacionService.findOperacion(importe,marca);
         return new ResponseEntity<>(ResponseEntityDTO.success("Busqueda correcta",operacionResponseDTOList),HttpStatus.OK);

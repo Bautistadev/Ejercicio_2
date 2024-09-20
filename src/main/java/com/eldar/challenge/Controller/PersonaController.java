@@ -37,11 +37,11 @@ public class PersonaController {
 
         //VALIDAMOS EMAIL DE LA PERSONA
         if(!validateEmail(personaRequestDTO.getEmail()))
-            return new ResponseEntity<>(ResponseEntityDTO.error("Error en el ingreso del email"),HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error en el ingreso del email"),HttpStatus.BAD_REQUEST);
 
         //VALIDAMOS FORMATO Y FECHA DE NACIMIENTO
         if(!validateFormatDate(personaRequestDTO.getFecha_de_nacimiento()) || !validBirthDate(toLocalDate(personaRequestDTO.getFecha_de_nacimiento())))
-            return new ResponseEntity<>(ResponseEntityDTO.error("Error en el formato de fecha"),HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error en el formato de fecha"),HttpStatus.BAD_REQUEST);
 
         try {
             response = this.personaService.save(personaRequestDTO);

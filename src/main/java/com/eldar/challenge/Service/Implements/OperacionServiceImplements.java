@@ -119,12 +119,14 @@ public class OperacionServiceImplements implements OperacionService {
 
     @Override
     public Boolean existsMarca(String marca){
+        System.out.println(marca);
         switch (marca.toUpperCase()){
-            case "VISA": return true;
-            case "AMEX": return true;
-            case "NARA": return true;
-            default: return false;
+            case "VISA":
+            case "AMEX":
+            case "NARA":
+                return true;
         }
+        return false;
     }
 
 }
