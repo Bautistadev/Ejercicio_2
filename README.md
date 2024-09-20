@@ -31,7 +31,7 @@ El sistema cumple con las siguientes características:
 
 ### 3. Cálculo de Tasas:
 - Cálculo de la tasa de una operación dependiendo de la marca de la tarjeta:
-    - **VISA**: Año / Mes (Ejemplo: 2020/12 = 1.67%).
+    - **VISA**: Año / Mes (Ejemplo: 20/12 = 1.67%).
     - **NARA**: Día del mes * 0.5 (Ejemplo: 27 * 0.5 = 13.5%).
     - **AMEX**: Mes * 0.1 (Ejemplo: 9 * 0.1 = 0.9%).
 
@@ -42,7 +42,7 @@ El sistema cumple con las siguientes características:
 ## Tecnologías Utilizadas
 
 - **Java Spring Boot**: Para el desarrollo de la API REST.
-- **MysqlSQL**: Base de datos para almacenar usuarios y tarjetas.
+- **Mysql**: Base de datos para almacenar usuarios y tarjetas.
 - **Java Mail**: Para el envío de notificaciones por correo electrónico.
 - **AWS (Amazon Web Services):** Para el hosting en la nube.
 - **JPA (ava Persistence API):** especificación de Java que define cómo interactuar con bases de datos relacionales a través de objetos Java.
@@ -51,14 +51,12 @@ El sistema cumple con las siguientes características:
 
 ### 1. Usuarios
 - **POST /persona/altaPersona**: Registrar una persona.
-- **DELETE /persona/{dni}**: Eliminar un usuario.
 
 ### 2. Tarjetas
-- **POST /tarjeta/altaTarjeta**: Crear nueva tarjeta
-- **DELETE /tarjetas/{pan}**: Eliminar una tarjeta.
+- **POST /tarjeta/altaTarjeta**: Crear nueva tarjeta.
 
 ### 3. Tasa de Operaciones
-- **GET /operacion/{nroOperacion/id}**: Consultar la tasa de una operación proporcionando la marca de la tarjeta y el importe.
+- **GET /operacion/tasa/{nroOperacion/id}**: Consultar la tasa de una operación proporcionando la marca de la tarjeta y el importe.
 
 ### 4. Compras
 - **POST /operacion/compra**: Realizar una compra proporcionando el monto, el detalle, la tarjeta asociada y el CVV. Al finalizar la compra, el usuario recibe una notificación por email.
@@ -67,7 +65,8 @@ El sistema cumple con las siguientes características:
 
 El sistema está hosteado en **[Amazon Web Services (AWS)]**, y puede ser accedido desde la siguiente URL:
 
-- **URL**: [https://your-cloud-url.com](http://localhost:8080/swagger-ui/index.html/)
+- **URL**: http://75.101.174.41:8080/[endpoint]
+- **URL GRAFRICO**: http://75.101.174.41:8080/swagger-ui/index.html
 
 ## Instalación y Ejecución Local
 
