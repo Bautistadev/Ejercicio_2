@@ -1,5 +1,6 @@
 package com.eldar.challenge;
 
+import com.eldar.challenge.Repository.OperacionRespository;
 import com.eldar.challenge.Repository.PersonaRepository;
 import com.eldar.challenge.Repository.TarjetaRepository;
 import jakarta.mail.internet.MimeMessage;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.math.BigDecimal;
 
 
 @SpringBootApplication
@@ -27,7 +29,9 @@ public class AppApplication implements CommandLineRunner {
 	public static void main(String[] args) throws Exception {
 
 		ConfigurableApplicationContext ctx = SpringApplication.run(AppApplication.class, args);
+		OperacionRespository o = ctx.getBean(OperacionRespository.class);
 
+		System.out.println(o.getOperationDateByMontoAndMarca(BigDecimal.valueOf(4000),"VISA"));
 
 	}
 

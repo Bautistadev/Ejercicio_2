@@ -1,5 +1,6 @@
 package com.eldar.challenge.DTO;
 
+import com.eldar.challenge.DTO.Abstract.MarcaDTO;
 import com.eldar.challenge.DTO.Abstract.TarjetaAbstractDTO;
 
 import java.time.LocalDate;
@@ -8,10 +9,11 @@ public class TarjetaDTO extends TarjetaAbstractDTO {
 
     private Long id;
     private Long numero;
-    private LocalDate fecha_vencimiento;
+    private String fecha_vencimiento;
     private String CVV;
 
-    public TarjetaDTO(String nombre_completo_titular, Integer DNI, String marca, Long id, Long numero, LocalDate fecha_vencimiento, String CVV) {
+
+    public TarjetaDTO(String nombre_completo_titular, Integer DNI, String marca, Long id, Long numero, String fecha_vencimiento, String CVV) {
         super(nombre_completo_titular, DNI, marca);
         this.id = id;
         this.numero = numero;
@@ -39,11 +41,11 @@ public class TarjetaDTO extends TarjetaAbstractDTO {
         this.numero = numero;
     }
 
-    public LocalDate getFecha_vencimiento() {
+    public String getFecha_vencimiento() {
         return fecha_vencimiento;
     }
 
-    public void setFecha_vencimiento(LocalDate fecha_vencimiento) {
+    public void setFecha_vencimiento(String fecha_vencimiento) {
         this.fecha_vencimiento = fecha_vencimiento;
     }
 
