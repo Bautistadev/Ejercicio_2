@@ -15,4 +15,11 @@ public class DetalleMapper {
 
         return detalle;
     }
+
+    public DetalleDTO map(Detalle detalle){
+        DetalleDTO detalleDTO = new DetalleDTO();
+        detalleDTO.setProducto(detalle.getProducto());
+        detalleDTO.setCantidad(detalle.getCantidad());
+        return detalleDTO;
+    }
 }

@@ -77,10 +77,8 @@ public class Persona {
     }
 
     public void setDni(Integer dni) throws Exception {
-
         if(!validateMinNumber(dni,8))
             throw new Exception("El dni no puede estar vacio o nulo, ademas debe poseer mas de 8 caracteres");
-
         this.dni = dni;
     }
 
@@ -90,11 +88,7 @@ public class Persona {
         return fecha_de_nacimiento;
     }
 
-    public void setFecha_de_nacimiento(LocalDate fecha_de_nacimiento) throws Exception {
-
-        if(!validBirthDate(fecha_de_nacimiento))
-            throw new Exception("La fecha de nacimiento no puede estar vacio, nula o invalida");
-
+    public void setFecha_de_nacimiento(LocalDate fecha_de_nacimiento){
         this.fecha_de_nacimiento = fecha_de_nacimiento;
     }
 
@@ -105,10 +99,6 @@ public class Persona {
     }
 
     public void setEmail(String email) throws Exception {
-
-        if(!validateEmail(email))
-            throw new Exception("El email debe poseer el dominio y @");
-
         this.email = email;
     }
 

@@ -7,6 +7,9 @@ import com.eldar.challenge.Entities.Nara;
 import com.eldar.challenge.Entities.Tarjeta;
 import com.eldar.challenge.Entities.Visa;
 
+import static com.eldar.challenge.Utils.EncriptyClass.desencriptar;
+import static com.eldar.challenge.Utils.ValidateClass.localDateToString;
+
 public class TarjetaMapper {
 
     public TarjetaMapper() {
@@ -27,13 +30,17 @@ public class TarjetaMapper {
 
     }
 
-    public TarjetaDTO map(Tarjeta tarjeta){
+
+
+    public TarjetaDTO map(Tarjeta tarjeta) throws Exception {
         TarjetaDTO tarjetaDTO = new TarjetaDTO();
         tarjetaDTO.setId(tarjeta.getId());
         tarjetaDTO.setNombre_completo_titular(tarjeta.getNombre_completo_titular());
         tarjetaDTO.setNumero(tarjeta.getNumero());
-        tarjetaDTO.setFecha_vencimiento(tarjeta.getFecha_vencimiento());
-        tarjetaDTO.setCVV(tarjeta.getCVV());
+        tarjetaDTO.setFecha_vencimiento(localDateToString (tarjeta.getFecha_vencimiento()));
+        tarjetaDTO.setCVV(desencriptar(tarjeta.getCVV()));
+        tarjetaDTO.setMarca(tarjeta.getMarca().getNombre());
+        tarjetaDTO.setDNI(tarjeta.getCashHolder().getDni());
 
         return tarjetaDTO;
     }

@@ -29,7 +29,7 @@ public class ValidateClass {
         return true;
     }
 
-    public static boolean validateFormatDate(String validate,String message){
+    public static boolean validateFormatDate(String validate){
         if(validate == null || validate == "")
             return true;
 
@@ -37,7 +37,6 @@ public class ValidateClass {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(validate);
         if (!matcher.matches()) {
-            System.out.println(message);
             return false;
         }
         return true;
@@ -52,10 +51,9 @@ public class ValidateClass {
         return true;
     }
 
-    public static boolean isExpired(String validate,String message){
+    public static boolean isExpired(String validate){
 
-        if(toLocalDate(validate).isBefore(LocalDate.now())) {
-            System.out.println(message);
+        if(toLocalDate(validate).isBefore(LocalDate.now())) {;
             return true;
         }
         return false;
@@ -66,14 +64,16 @@ public class ValidateClass {
         if(validate == null || validate == "") {
             return false;
         }
+        // Verificar que contenga un "@" y un "." después del "@"
+        int posicionArroba = validate.indexOf("@");
+        int posicionPunto = validate.indexOf(".", posicionArroba);
 
-        String regex = "^[\\w-\\.]+@[\\w-]+\\.com$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(validate.toLowerCase());
-        if (!matcher.matches()) {
-            return false;
-        }
-        return true;
+        // Verificar que contenga ".com" en cualquier parte
+        boolean contieneCom = validate.contains(".com");
+
+        // El email es válido si contiene "@" no al inicio, un "." después del "@" y ".com" en cualquier lugar
+        return posicionArroba > 0 && posicionPunto > posicionArroba && contieneCom;
+
     }
 
     public static LocalDate toLocalDate(String fecha){

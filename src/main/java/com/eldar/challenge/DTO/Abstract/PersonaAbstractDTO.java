@@ -52,9 +52,6 @@ public abstract class PersonaAbstractDTO {
     }
 
     public void setDni(Integer dni) throws Exception {
-        if(!validateMinNumber(dni,8))
-            throw new Exception("El dni no puede estar vacio o nulo, ademas debe poseer mas de 8 caracteres");
-
         this.dni = dni;
     }
 
@@ -64,10 +61,6 @@ public abstract class PersonaAbstractDTO {
 
     public void setFecha_de_nacimiento(String fecha_de_nacimiento) throws Exception {
 
-        if(!validBirthDate(toLocalDate(fecha_de_nacimiento)))
-            throw new Exception("La fecha de nacimiento no puede estar vacio o nulo");
-
-
         this.fecha_de_nacimiento = fecha_de_nacimiento;
     }
 
@@ -76,10 +69,6 @@ public abstract class PersonaAbstractDTO {
     }
 
     public void setEmail(String email) throws Exception {
-
-        if(!validateEmail(email))
-            throw new Exception("El email debe poseer el dominio y @");
-
         this.email = email;
     }
 

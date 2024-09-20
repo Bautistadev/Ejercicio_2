@@ -1,20 +1,12 @@
 package com.eldar.challenge.Service.Implements;
 
-import com.eldar.challenge.DTO.PersonaDTO;
 import com.eldar.challenge.DTO.PersonaRequestDTO;
 import com.eldar.challenge.DTO.PersonaResponseDTO;
-import com.eldar.challenge.DTO.TarjetaDTO;
 import com.eldar.challenge.Entities.Persona;
 import com.eldar.challenge.Repository.PersonaRepository;
-import com.eldar.challenge.Repository.TarjetaRepository;
 import com.eldar.challenge.Service.Interface.PersonaService;
 import com.eldar.challenge.Service.Mapper.PersonaMapper;
-import com.eldar.challenge.Service.Mapper.TarjetaMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PersonaServiceImplements implements PersonaService {
@@ -43,10 +35,6 @@ public class PersonaServiceImplements implements PersonaService {
     public PersonaResponseDTO save(PersonaRequestDTO personaRequestDTO) throws Exception {
 
         PersonaResponseDTO response = new PersonaResponseDTO();
-        if(personaRepository.existsByDni(personaRequestDTO.getDni())) {
-            response.setMessage("ERROR: PERSONA EXISTENTE");
-            return response;
-        }
 
         Persona personaSave = this.personaRepository.save(this.personaMapper.map(personaRequestDTO));
         response = this.personaMapper.map(personaSave);
@@ -55,14 +43,9 @@ public class PersonaServiceImplements implements PersonaService {
 
         return response;
     }
-
     @Override
-    public PersonaResponseDTO update(PersonaDTO personaDTO) {
-        return null;
+    public Boolean existsByDni(Integer dni){
+        return personaRepository.existsByDni(dni);
     }
 
-    @Override
-    public ResponseEntity<String> remove(Integer dni) {
-        return null;
-    }
 }

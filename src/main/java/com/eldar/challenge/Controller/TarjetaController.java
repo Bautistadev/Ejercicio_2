@@ -1,5 +1,7 @@
 package com.eldar.challenge.Controller;
 
+import com.eldar.challenge.DTO.ResponseEntityDTO;
+import com.eldar.challenge.DTO.TarjetaDTO;
 import com.eldar.challenge.DTO.TarjetaRequestDTO;
 import com.eldar.challenge.Service.Interface.TarjetaService;
 import org.springframework.http.HttpStatus;
@@ -19,10 +21,26 @@ public class TarjetaController {
     }
 
     @PostMapping("/altaTarjeta")
-    public ResponseEntity<String> altaTarjeta(@Valid @RequestBody TarjetaRequestDTO tarjetaRequestDTO) throws Exception {
-        String response = this.tarjetaService.save(tarjetaRequestDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+    public ResponseEntity<ResponseEntityDTO<TarjetaDTO>> altaTarjeta(@Valid @RequestBody TarjetaRequestDTO tarjetaRequestDTO) throws Exception {
+
+        //VALIDAMO EXISTENCIA DE LA PERSONA
+        if(!this.tarjetaService.existsByDni(tarjetaRequestDTO.getDNI()))
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error persona no existente"),HttpStatus.NOT_FOUND);
+
+        //VALIDAMOS QUE LA TARJETA EXISTA
+        if(this.tarjetaService.existsTarjeta(tarjetaRequestDTO.getDNI(),tarjetaRequestDTO.getMarca()))
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error tarjeta registrada"),HttpStatus.CONFLICT);
+
+        //VALIDAMO LA MARCA
+        if(!this.tarjetaService.existsMarca(tarjetaRequestDTO.getMarca()))
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error marca no registrada"),HttpStatus.NOT_FOUND);
+
+
+        try {
+           TarjetaDTO response = this.tarjetaService.save(tarjetaRequestDTO);
+           return new ResponseEntity<>(ResponseEntityDTO.success("Tarjeta persistida",response),HttpStatus.OK);
+       }catch (Exception e){
+           return new ResponseEntity<>(ResponseEntityDTO.error("Error en la persistencia"),HttpStatus.NOT_FOUND);
+       }
     }
-
-
 }

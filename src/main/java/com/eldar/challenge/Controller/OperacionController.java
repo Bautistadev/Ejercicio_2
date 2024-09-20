@@ -1,14 +1,20 @@
 package com.eldar.challenge.Controller;
 
+import com.eldar.challenge.DTO.CompraDTO;
 import com.eldar.challenge.DTO.CompraRequestDTO;
-import com.eldar.challenge.DTO.OperacionRequestDTO;
 import com.eldar.challenge.DTO.OperacionResponseDTO;
+import com.eldar.challenge.DTO.ResponseEntityDTO;
 import com.eldar.challenge.Service.Interface.OperacionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.List;
+
+import static com.eldar.challenge.Utils.ValidateClass.isExpired;
+import static com.eldar.challenge.Utils.ValidateClass.localDateToString;
 
 @RestController
 @RequestMapping("/api/v1/operacion")
@@ -21,12 +27,46 @@ public class OperacionController {
     }
 
     @PostMapping("/compra")
-    public ResponseEntity<String>compra(@Valid @RequestBody CompraRequestDTO compraRequestDTO) throws Exception {
-        return ResponseEntity.status(HttpStatus.OK).body(this.operacionService.compra(compraRequestDTO));
+    public ResponseEntity<ResponseEntityDTO<CompraDTO>>compra(@Valid @RequestBody CompraRequestDTO compraRequestDTO) throws Exception {
+
+        //VALIDACIONES DEL MONTO
+        if(compraRequestDTO.getMonto().compareTo(new BigDecimal(10000)) > 0)
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error: el monto no puede superar los $10000"),HttpStatus.BAD_REQUEST);
+
+        if(compraRequestDTO.getMonto().compareTo(new BigDecimal(0)) <0)
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error: el monto no puede ser menor que 0"),HttpStatus.BAD_REQUEST);
+
+        if(compraRequestDTO.getMonto().compareTo(new BigDecimal(0)) == 0)
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error: el monto no puede ser 0"),HttpStatus.BAD_REQUEST);
+
+        if(compraRequestDTO.getDetalles().isEmpty())
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error: debes ingresar el detalle"),HttpStatus.BAD_REQUEST);
+
+        if(this.operacionService.findTarjetaByPam(compraRequestDTO.getPam()) == null)
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error: tarjeta no registrada"),HttpStatus.NOT_FOUND);
+
+        if(isExpired(localDateToString(this.operacionService.findTarjetaByPam(compraRequestDTO.getPam()).getFecha_vencimiento())))
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error: tarjeta caducada"),HttpStatus.BAD_REQUEST);
+
+        if(!this.operacionService.validateCVV(compraRequestDTO.getPam(),compraRequestDTO.getCvv()))
+            return new ResponseEntity<>(ResponseEntityDTO.error("Error: cvv fallido"),HttpStatus.NOT_FOUND);
+
+
+        CompraDTO compraDTO = this.operacionService.compra(compraRequestDTO);
+
+       return new ResponseEntity<>(ResponseEntityDTO.success("Info: Compra registrada con exito",compraDTO),HttpStatus.OK);
     }
 
-    @GetMapping("/tasa/{nroOperacion}")
-    public ResponseEntity<OperacionResponseDTO>operacion(@PathVariable Long nroOperacion){
-        return ResponseEntity.status(HttpStatus.OK).body(operacionService.findOperacion(nroOperacion));
+   @GetMapping("/tasa/{marca}/{importe}")
+    public ResponseEntity<ResponseEntityDTO<List<OperacionResponseDTO>>>operacion(@PathVariable String marca, BigDecimal importe){
+
+        if(marca == null || importe == null || importe.equals(0))
+            new ResponseEntity<>(ResponseEntityDTO.error("Error: Mal ingreso de los datos"),HttpStatus.BAD_REQUEST);
+
+        if(operacionService.existsMarca(marca))
+            new ResponseEntity<>(ResponseEntityDTO.error("Error: La marca no existente"),HttpStatus.BAD_REQUEST);
+
+        List<OperacionResponseDTO> operacionResponseDTOList = this.operacionService.findOperacion(importe,marca);
+        return new ResponseEntity<>(ResponseEntityDTO.success("Busqueda correcta",operacionResponseDTOList),HttpStatus.OK);
     }
 }
