@@ -7,11 +7,13 @@ public class OperacionResponseDTO {
     private BigDecimal tasa;
     private BigDecimal importe;
     private String marca;
+    private String fecha;
 
-    public OperacionResponseDTO(BigDecimal tasa, BigDecimal importe, String marca) {
+    public OperacionResponseDTO(BigDecimal tasa, BigDecimal importe, String marca,String fecha) {
         this.tasa = tasa;
         this.importe = importe;
         this.marca = marca;
+        this.fecha= fecha;
     }
 
     public BigDecimal getTasa() {
@@ -36,5 +38,13 @@ public class OperacionResponseDTO {
 
     public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getFecha() {
+        return fecha;
     }
 }
